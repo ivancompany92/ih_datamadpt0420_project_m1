@@ -17,7 +17,7 @@ def argument_parser():
     parser = argparse.ArgumentParser(description='Set analysis type')
     parser.add_argument("-p", "--path", type=str, dest='path', required=True, help="Indicate the path to the survey "
                                                                                    "data file")
-    parser.add_argument("-c", "--country", type=str, choices=countries_list, dest='country', required=True,
+    parser.add_argument("-c", "--country", type=str, choices=countries_list, required=True, dest='country',
                         help="You must indicate a country to obtain your results")
     parser.add_argument("-u", "--unknown", type=str, choices=unknown_list, dest='unknown', default='Y',
                         help="You can indicate whether you want to get results from people whose work is unknown or "

@@ -116,8 +116,9 @@ def title_jobs_API(data):
 
 
 def clean_jobs(df_data, titles_jobs):
-    # With the list of job titles and the DF, we change within the DF the code for the job title.
-    # If the field is null, we leave it as is. Later in another function we will already work on these null fields.
+    # With the libray list of job titles and the DF, we change within the DF the code for the job title.
+    # If the field is null, we leave it as is.
+    # Later in another function we will already work on these null fields.
 
     print('Starting cleaning the jobs on the df...')
     count = 0
