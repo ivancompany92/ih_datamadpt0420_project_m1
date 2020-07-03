@@ -1,55 +1,64 @@
 # Data Project README file
 
-The README file describes the essence of the project playing the most important role. Most visitors will simply scroll down about twice on the README and leave if they are not interested. So, the README file should provide the reason **why** to checkout your project!!!). 
-Bearing that in mind, your job is to: 
-- Tell them what it is (with context).
-- Show them what it looks like in action.
-- Show them how they use it.
-- Tell them any other relevant details.
+![Image](https://techsalesgroup.files.wordpress.com/2016/10/ironhack-logo-negro1.jpg?w=200)
 
-![Image](https://res.cloudinary.com/springboard-images/image/upload/q_auto,f_auto,fl_lossy/wordpress/2019/05/aiexcerpt.png)
+#### Ivan Company
 
----
-
-## **Formatting**
-Your readers will most likely view your README in a browser so please keep that in mind when formatting its content: 
-- Use proper format when necesary (e.g.: `import pandas as pd`). 
-- Categorize content using two or three levels of header beneath. 
-- Make use of **emphasis** to call out important words. 
-- Link to project pages for related libraries you mention. Link to Wikipedia, Wiktionary, even Urban Dictionary definitions for words of which a reader may not be familiar. Make amusing cultural references. 
-- Add links to related projects or services. 
-
-> Here you have a markdown cheatsheet [Link](https://commonmark.org/help/) and tutorial [Link](https://commonmark.org/help/tutorial/).
+#### Data Analytics Bootcamp - Project module 1
 
 
-## **Start writing ASAP:**
-*Last but not least, by writing your README soon you give yourself some pretty significant advantages. Most importantly, you’re giving yourself a chance to think through the project without the overhead of having to change code every time you change your mind about how something should be organized or what should be included.*
+## **Overview**
+With this pipeline you can find out the job and the age group to which the people who participated in the survey on "the minimum vital income" belong. 
+You also get the percentage of each age group and job over the total.
 
 
-## **Suggested Structure:**
+## **Data**
 
-### :raising_hand: **Name** 
-Self-explanatory names are best. If the name sounds too vague or unrelated, it may be a signal to move on. It also must be catchy. Images, Logo, Gif or some color is strongly recommended.
+* [.db Dataset](http://www.potacho.com/files/ironhack/raw_data_project_m1.db)
 
-### :baby: **Status**
-Alpha, Beta, 1.1, Ironhack Data Analytics Final Project, etc... It's OK to write a sentence, too. The goal is to let interested people know where this project is at.
+The dataset is the raw_data_project_m1.db file, with four tables where you can see all the information about the survey. 
+The m_aquisiton.py module is responsible for selecting the necessary information in this dataset.
 
-### :running: **One-liner**
-Having a one-liner that describes the pipeline/api/app is useful for getting an idea of what your code does in slightly greater detail. 
 
-### :computer: **Technology stack**
-Python, Pandas, Scipy, Scikit-learn, etc. Indicate the technological nature of the software, including primary programming language(s), main libraries and whether the software is intended as standalone or as a module in a framework or other ecosystem.
+* [API](http://dataatwork.org/data/)
 
-### :boom: **Core technical concepts and inspiration**
-Why does it exist? Frame your project for the potential user. Compare/contrast your project with other, similar projects so the user knows how it is different from those projects. Highlight the technical concepts that your project demonstrates or supports. Keep it very brief.
+For some reason, the data in some columns is encoded or does not have the same structure, so it is necessary to correct the data first. 
+The m_wrangling.py module has this purpose.
 
-### :wrench: **Configuration**
-Requeriments, prerequisites, dependencies, installation instructions.
+For this we will use this API to be able to name the titles of the jobs of the people who participated in the survey.
 
-### :see_no_evil: **Usage**
-Parameters, return values, known issues, thrown errors.
 
-### :file_folder: **Folder structure**
+* [Web Scraping](https://ec.europa.eu/eurostat/statistics-explained/index.php/Glossary:Country_codes)
+
+We also need to enrich our database by changing the country code for its full name, for this we will do web scraping 
+from the link above in order to obtain a complete list of the names of each country.
+
+
+## **Insructions**
+
+In order to run it, you will have to indicate:
+
+-p / --path: the path where you have the .db file
+
+-c / --country: the country you want to get results from. You can also put 'All' to get the results of all the countries together.
+
+-u / --unknown: a large number of people whose profession is unknown have participated in the survey. You can include them or not, in the final result.
+
+
+## **Requirements**
+You need to have Python installed with the following libraries:
+   - Pandas
+    
+   - Requests
+
+   - Beautifulsoup4
+    
+   - Sqlalchemy
+
+You have more information in the file: requirements.txt
+
+
+### **Folder structure**
 ```
 └── project
     ├── __trash__
@@ -59,41 +68,26 @@ Parameters, return values, known issues, thrown errors.
     ├── README.md
     ├── main_script.py
     ├── notebooks
-    │   ├── notebook1.ipynb
-    │   └── notebook2.ipynb
-    ├── package1
-    │   ├── module1.py
-    │   └── module2.py
+    │   └──data_1.ipynb
+    ├── p_acquisition
+    │   ├── __init__.py
+    │   └── m_acquisition.py
+    ├── p_wrangling
+    │   ├── __init__.py
+    │   └── m_wrangling.py
+    ├── p_analysis
+    │   ├── __init__.py
+    │   └── m_analysis.py
+    ├── p_reporting
+    │   ├── __init__.py
+    │   └── m_reporting.py
     └── data
         ├── raw
-        ├── processed
         └── results
 ```
 
-> Do not forget to include `__trash__` and `.env` in `.gitignore` 
 
-### :shit: **ToDo**
-Next steps, features planned, known bugs (shortlist).
+## **Next steps:**
+- We can analyze the results and group them by other values, such as the gender or the location of the person (city or town).
 
-### :information_source: **Further info**
-Credits, alternatives, references, license.
-
-### :love_letter: **Contact info**
-Getting help, getting involved, hire me please.
-
----
-
-> Here you have some repo examples:
-- [Mamba (OCR-Translator-Assistant)](https://github.com/YonatanRA/OCR-translator-assistant-project)
-- [Art Classification](https://github.com/serguma/art_classification)
-- [OSNet-IBN (width x 1.0) Lite](https://github.com/RodMech/OSNet-IBN1-Lite)
-- [Movie Founder](https://github.com/Alfagu/final-project-Ironhack-0419mad)
-- [Convolutional Neural Network to detect Pneumonia](https://github.com/jmolins89/final-project)
-- [Brain tumor detection project](https://github.com/alonsopdani/brain-tumor-detection-project)
-- [Policy-Gradient-Methods](https://github.com/cyoon1729/Policy-Gradient-Methods)
-
-> Here you have some tools and references:
-- [Make a README](https://www.makeareadme.com/)
-- [Awesome README](https://github.com/matiassingers/awesome-readme)
-- [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
-
+- We can obtain the main reasons for or against the minimum vital income and group them by age, gender, location ...
