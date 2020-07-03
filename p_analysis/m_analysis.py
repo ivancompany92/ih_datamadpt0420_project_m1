@@ -3,7 +3,9 @@ import pandas as pd
 
 # analysis functions
 def group_age(df_data):
-    print('Starting to classify by age groups...')
+    # we obtain the age group to which each participant of the survey belongs
+
+    print('We introduce the age group of each participant on the df.')
     count = 0
     for i in df_data['Age']:
         if i < 26:
@@ -14,12 +16,14 @@ def group_age(df_data):
             df_data.loc[count, 'Age group'] = '26_39'
         count += 1
 
-    print('Finished the classification by age groups.')
     return df_data
 
 
 def quantity_per_job(df_data):
-    print('Starting to group by job and age group,and getting the amount...')
+    # We grouped the participants by age range and job title for each country.
+    # We obtain the quantity of each group and introduce it on the DF.
+
+    print('Starting to group by title job and age group,and getting the amount...')
     df_with_quantity = df_data.groupby(['Country', 'Job Title', 'Age group']).count()
     df_with_quantity.columns = ['Quantity']
     df_with_quantity.reset_index(inplace=True)
@@ -28,6 +32,10 @@ def quantity_per_job(df_data):
 
 
 def percentage_per_job(df_data):
+    # We obtain the percentage of each group of participants (by age group and job title)
+    # compared to the total for the country.
+    # If the user put all the countries ('All'), the percentage is over the total of all countries.
+
     print('Starting to get the percentage that represents the quantity over the global...')
     df_with_only_percentage = (df_data[['Quantity']] / df_data[['Quantity']].sum()) * 100
     df_with_only_percentage = df_with_only_percentage.round(2)
@@ -37,7 +45,8 @@ def percentage_per_job(df_data):
 
 
 def merge_df(df_1, df_2):
-    print('We joined two DF')
+    # We join two DF into one
+
     df_merge = pd.merge(df_1, df_2, left_index=True, right_index=True)
     return df_merge
 
@@ -46,5 +55,5 @@ def analyze(df):
     dat_classify_group_age = group_age(df)
     dat_grouped_job_age_quantity = quantity_per_job(dat_classify_group_age)
     df_with_percentage_quantity = percentage_per_job(dat_grouped_job_age_quantity)
-    dat_merge_percentage = merge_df(dat_grouped_job_age_quantity, df_with_percentage_quantity)
-    return dat_merge_percentage
+    dat_merge_quantity_percentage = merge_df(dat_grouped_job_age_quantity, df_with_percentage_quantity)
+    return dat_merge_quantity_percentage

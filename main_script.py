@@ -12,25 +12,28 @@ def argument_parser():
                       'Estonia', 'Cyprus', 'Austria', 'Sweden', 'Ireland', 'Latvia', 'Poland',
                       'United Kingdom']
 
-    jobless_list = ['Y', 'N']
+    unknown_list = ['Y', 'N']
 
-    parser = argparse.ArgumentParser(description='Set chart type')
-    parser.add_argument("-p", "--path", type=str, dest='path', help="Indicate the path to the survey data file")
+    parser = argparse.ArgumentParser(description='Set analysis type')
+    parser.add_argument("-p", "--path", type=str, dest='path', required=True, help="Indicate the path to the survey "
+                                                                                   "data file")
     parser.add_argument("-c", "--country", type=str, choices=countries_list, dest='country', required=True,
                         help="You must indicate a country to obtain your results")
-    parser.add_argument("-j", "--jobless", type=str, choices=jobless_list, dest='jobless', default='Y',
-                        help="You can indicate if you want the results with the opinions of the unemployed or not")
+    parser.add_argument("-u", "--unknown", type=str, choices=unknown_list, dest='unknown', default='Y',
+                        help="You can indicate whether you want to get results from people whose work is unknown or "
+                             "not.")
 
     args = parser.parse_args()
     return args
 
 
-def main(path, country, jobless):
+def main(path, country, unknown):
     print('Starting Pipeline...')
     df_with_dates_raw = mac.acquire(path)
-    df_with_dates_clean = mwr.wrangle(df_with_dates_raw, country, jobless)
+    df_with_dates_clean = mwr.wrangle(df_with_dates_raw, country, unknown)
     df_analyze = man.analyze(df_with_dates_clean)
-    df_save = mre.save_df(df_analyze)
+    mre.save_df(df_analyze, country, unknown)
+
     print(f'The results of the country -{country}- are: ')
     print(df_analyze)
     print('Finished Pipeline')
@@ -38,4 +41,4 @@ def main(path, country, jobless):
 
 if __name__ == '__main__':
     arguments = argument_parser()
-    main(arguments.path, arguments.country, arguments.jobless)
+    main(arguments.path, arguments.country, arguments.unknown)
